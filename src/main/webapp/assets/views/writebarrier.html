@@ -1,0 +1,40 @@
+<div class="row" ng-controller="WriteBarrierCtrl">
+    <section class="offset1">
+        <h1>Effacer dans le futur</h1>
+    </section>
+    <section class="offset1">
+        <h2>Décalage en seconde(s)</h2>
+
+        <form class="form-inline">
+            <h4 class="text-info">
+                DELETE FROM writebarrier USING TIMESTAMP currentTime+{{writebarrier.shift}} WHERE id='writebarrier'
+            </h4>
+
+            <div ui-slider min="0" max="20" ng-model="writebarrier.shift"/>
+            <br/>
+            <input type="text" class="input-mini" value="+{{writebarrier.shift}}" disabled/>
+            <button type="button" class="btn btn-primary" ng-click="delete()">Delete</button>
+        </form>
+    </section>
+    <br/>
+    <section class="offset1">
+        <h2>Insertion</h2>
+
+        <form class="form-inline">
+            <h4 class="text-info">INSERT INTO writebarrier(id,value)
+                VALUES('writebarrier','{{writebarrier.value}}')</h4>
+            <input type="text" class="input-mini" ng-model="writebarrier.value"/>
+            <button type="button" class="btn btn-primary" ng-click="insertValue()">Insérer</button>
+        </form>
+    </section>
+    <hr/>
+    <section class="offset1">
+        <div>
+            <ui-include src="'assets/views/templates/common.html'" fragment="'#server-reply'"/>
+        </div>
+        <h4 ng-if="success && httpResponse.data">
+            valeur =
+            <span class="badge badge-info">{{httpResponse.data}}</span>
+        </h4>
+    </section>
+</div>
